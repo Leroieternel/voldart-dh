@@ -17,7 +17,7 @@
     <meta property="og:image:height" content="576">
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://voldart-dh.github.io/"/>
-    <meta property="og:title" content="Marigold: Is it all sunshine and Marigolds?" />
+    <meta property="og:title" content="Synthesizing Interactive Human Behaviors" />
     <meta property="og:description" content="3D reconstruction methods such as Neural Radiance Fields (NeRFs) excel at rendering photorealistic novel views of complex scenes. However, recovering a high-quality NeRF typically requires tens to hundreds of input images, resulting in a time-consuming capture process. We present ReconFusion to reconstruct real-world scenes using only a few photos. Our approach leverages a diffusion prior for novel view synthesis, trained on synthetic and multiview datasets, which regularizes a NeRF-based 3D reconstruction pipeline at novel camera poses beyond those captured by the set of input images. Our method synthesizes realistic geometry and texture in underconstrained regions while preserving the appearance of observed regions. We perform an extensive evaluation across various real-world datasets, including forward-facing and 360-degree scenes, demonstrating significant performance improvements over previous few-view NeRF reconstruction approaches."/>
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -125,10 +125,7 @@
                     Abstract
                 </h3>
                 <p class="text-justify">
-                    DART is a diffusion-based autoregressive motion model for real-time text-driven motion control. It is capable of creating realistic sequences of motions conditioned on text.
-                    Naturally the model should be capable of adapting to different scene geometry, but also avoid self-intersection for humans. This is where the current optimization approach of latent codes lacks in qualitative results. With our contributions, 
-                    the optimization is improved by using SMPL-X and Volumetric SMPL, which gives better collision loss objectives, 
-                    leading to less intersections with the scene geometry and self-intersections.
+                    In this work, we propose VolDART, an advanced model that integrates VolumetricSMPL into the collision loss function. VolumetricSMPL extends the traditional SMPL model with a volumetric representation of the human body, enabling more accurate and comprehensive collision detection with the scene geometry. This results in more physically plausible motion generation. Compared to the original DART, our method significantly reduces collisions across diverse test scenes. Furthermore, we extend DART to support interactions with dynamic objects and human-human scenarios, demonstrating its versatility in complex, interactive environments.
                 </p>
             </div>
         </div>
@@ -143,10 +140,10 @@
                     DART Motion Generation + VolumetricSMPL-based Collision Optimization
                 </h4> -->
 
-                <image src="img/method_overview.png" width=60% style="display: block; margin: auto;"></image>
+                <image src="img/method_1.png" width=60% style="display: block; margin: auto;"></image>
                 <br>
                 <p class="text-justify">
-                    To evaluate Marigold performance, we run Marigold on various dataset with groundtruth depth, and align the affine-invariant depth from Marigold with the groundtruth by RANSAC. Then we compare the aligned depth and groundtruth depth qualitatively and quantitatively using absolute relative error.
+                    We optimized the collision loss in the original DART, introducing VolumetricSMPL to check the collision with SMPL body vertices, while the original DART only considers the joints while optimizing the collision loss.
                 </p >
                 <br>
             </div>
@@ -163,16 +160,16 @@
 
                 <div class="text-center ">
                     <ul class="nav nav-pills center-pills">
-                        <li class="method-pill active" data-value="fortress"
+                        <li class="method-pill active" data-value="cabbenchescomp"
                             onclick="selectCompVideo(this, 'area1')"><a>CAB benches</a></li>
-                        <li class="method-pill" data-value="leaves"
+                        <li class="method-pill" data-value="cabseminarcomp"
                             onclick="selectCompVideo(this, 'area1')"><a>Seminar-G110</a></li>
                 </div>
 
                 <div class="text-center">
                     <div class="video-container">
                         <video class="video" style="height: 280px; max-width: 100%;" id="compVideoArea1" loop playsinline autoplay muted>
-                            <source id="sourceArea1" src="/Users/jiaxiangyi/Downloads/cab_benches_dart.mp4" type="video/mp4" />
+                            <source id="sourceArea1" src="videos/h264_cabbenchescomp.mp4" type="video/mp4" />
                         </video>
                     </div>
                     <p class="text-justify" style="text-align: center;">
@@ -180,21 +177,17 @@
                     </p>
                     <br>
                 </div>
-            <!-- </div> -->
-
+            </div>
+            <div class="col-md-8 col-md-offset-2" id="area2">
                 <h4>
                     Interaction with Static Objects
                 </h4>
-
-            <!-- <div class="row"> -->
-            <!-- <div class="col-md-8 col-md-offset-2" id="area2"> -->
-
                 <div class="text-center ">
                     <ul class="nav nav-pills center-pills">
-                        <li class="method-pill active" data-value="record3d_sheep"
-                            onclick="selectCompVideo(this, 'area1')"><a>Kitchen</a></li>
-                        <li class="method-pill" data-value="record3d_flower"
-                            onclick="selectCompVideo(this, 'area1')"><a>Foodlab</a></li>
+                        <li class="method-pill active" data-value="kitchencomp"
+                            onclick="selectCompVideo(this, 'area2')"><a>Kitchen</a></li>
+                        <li class="method-pill" data-value="foodlab_comp"
+                            onclick="selectCompVideo(this, 'area2')"><a>Foodlab</a></li>
                     </ul>
                 </div>
 
@@ -207,54 +200,39 @@
                 <div class="text-center">
                     <div class="video-container">
                         <video class="video" style="height: 280px; max-width: 100%;" id="compVideoArea2" loop playsinline autoplay muted>
-                            <source id="sourceArea2" src="videos/h264_record3d_sheep.mp4" type="video/mp4" />
+                            <source id="sourceArea2" src="videos/h264_kitchencomp.mp4" type="video/mp4" />
                         </video>
                     </div>
                     <p class="text-justify" style="text-align: center; margin-bottom: 2em;">
                         Original DART (left) vs Ours (right) on two EgoBody scenes. Collisions are highlighted in RED color. Try selecting scenes!
                     </p>
-                        <!-- <script>
-                            video0 = document.getElementById("compVideo0");
-                            video0.addEventListener('loadedmetadata', function() {
-                                if (activeVidID == 0 && select){
-                                    video0.play();
-                                    // print video size
-                                    console.log(video0.videoWidth, video0.videoHeight);
-                                    video0.hidden = false;
-                                    video1.hidden = true;
-                                }
-                            });
-                        </script> -->
 
-                        <!-- <script>
-                            activeMethodPill = document.querySelector('.method-pill.active-pill');
-                        </script> -->
                 </div>
             <!-- </div> -->
             <br>
 
-            <h4>
-                Human-human Interaction & Interaction with Dynamic Scene
-            </h4>
 
             <!-- add other visualizations -->
-            <!-- <div class="col-md-8 col-md-offset-2" id="area3"> -->
+            <div class="col-md-8 col-md-offset-2" id="area3">
+                <h4>
+                Human-human Interaction & Interaction with Dynamic Scene
+                </h4>
                 <p class="text-justify">
                     We also implemented human-human interaction and interaction with dynamic objects. For human-human interaction, we model a high-five motion for two persons by jointly optimizing both humans' motions.
                     For interacting with dynamic objects, we model a person dribbling a bouncing ball.
                 </p>
                 <div class="text-center ">
                     <ul class="nav nav-pills center-pills">
-                        <li class="method-pill active" data-value="high-five"
+                        <li class="method-pill active" data-value="high_five"
                             onclick="selectCompVideo(this, 'area3')"><a>High-five</a></li>
-                        <li class="method-pill" data-value="bouncing-ball"
+                        <li class="method-pill" data-value="bouncingball"
                             onclick="selectCompVideo(this, 'area3')"><a>Bouncing Ball</a></li>
                     </ul>
             </div>
             <div class="text-center">
                     <div class="video-container">
                         <video class="video" style="height: 280px; max-width: 100%;" id="compVideoArea3" loop playsinline autoplay muted>
-                            <source id="sourceArea3" src="videos/h264_record3d_sheep.mp4" type="video/mp4" />
+                            <source id="sourceArea3" src="videos/h264_high_five.mp4" type="video/mp4" />
                         </video>
                     </div>
                 </div>
@@ -268,25 +246,30 @@
 				  Quantitative Results
                 </h3>
                 <h4>
-                    Scene Navigation
+                    Collision Evaluation
                 </h4>
                 <p class="text-justify">
-                Our quantative evaluation includes the distance to the final goal (in meters), the collision percentage, the total number
+                Our collision evaluation includes the collision percentage, the total number
                 of vertices colliding with the scene among all the evaluated
-                frames, the joint loss, the contact motion smoothness, which
-                is represented by the jerk loss.
+                frames, the collision reduction precentage.
                 </p>
 <!--                 <image src="img/pose_est_table.png" width=95% style="display: block; margin: auto;"></image> -->
-                <image src="img/frame10_result.png" width=100% style="display: block; margin: auto;"></image>
+                <image src="img/collision_new.png" width=100% style="display: block; margin: auto;"></image>
                 <p class="text-justify" style="text-align: center;">
                     Original DART (baseline) vs Ours on the navigation task.
                 </p>
                 <br>
 
                 <h4>
-                    Interaction with Static Objects
+                    Motion Quality Evaluation
                 </h4>
-                <image src="img/fail_cases.png" width=95% style="display: block; margin: auto;"></image>
+                <p class="text-justify">
+                Our motion quality evaluation includes the distance to the final goal (in meters), the collision percentage, the total number
+                of vertices colliding with the scene among all the evaluated
+                frames, the joint loss, the contact motion smoothness, which
+                is represented by the jerk loss.
+                </p>
+                <image src="img/motion_eval.png" width=95% style="display: block; margin: auto;"></image>
                 <p class="text-justify" style="text-align: center;">
                     Original DART (baseline) vs Ours on the navigation task.
                 </p>
