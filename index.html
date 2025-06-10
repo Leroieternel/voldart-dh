@@ -66,7 +66,7 @@
     <!-- <div class="container" id="main"> -->
         <div class="row">
             <h2 class="col-md-12 text-center">
-                <b>Marigold</b>: Is it all sunshine and Marigolds?</br>
+                <b>Synthesizing Interactive Human Behaviors</b></br>
             </h2>
         </div>
         <div class="row text-center">
@@ -75,19 +75,15 @@
             <div class="col-md-6 text-center">
                 <ul class="list-inline">
                     <li>
-                            Moyang Li
-                        <sup>1</sup>
+                            Jixian Tang
+                        <sup>1, 2</sup>
                     </li>
                     <li>
                             Xiangyi Jia
                        <sup>1</sup>
                     </li>
                     <li>
-                            Yuxuan Xie
-                        <sup>1</sup>
-                    </li>
-                    <li>
-                            Feng Tian
+                            Nils Egger
                         <sup>1</sup>
                     </li>
                     <wbr>
@@ -98,6 +94,7 @@
 </div>
     <div class="col-md-12 text-center">
         <sup>1</sup>ETH Zurich
+        <sup>2</sup>University of Zurich
     </div>
     <br>
 
@@ -111,7 +108,7 @@
                 </span>
                 <span>Code</span>
             </a> -->
-            <a href="https://github.com/MoyangLi00/MDS-NeRF"
+            <a href="https://github.com/"
                 class="external-link button is-normal is-rounded is-dark">
                 <span class="icon">
                     <i class="far fa-file-code"></i>
@@ -122,57 +119,16 @@
     </div>
 
 
-
-        <!-- <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <video id="teaser-video-ours" width="100%" autoplay loop muted controls>
-                  <source src="videos/h264_record3d_sheep.mp4" type="video/mp4" />
-                </video> -->
-<!--
-                <video id="teaser-video-ours" width="100%" autoplay loop muted>
-                  <source src="videos/teaser/grid_ours.mp4" type="video/mp4" />
-                </video>
-                <video id="teaser-video-zipenrf" width="100%" autoplay loop muted hidden>
-                  <source src="videos/teaser/grid_zipnerf.mp4" type="video/mp4" />
-                </video>
-
-                <div class="switch-container-wrapper">
-                    <div class="switch-container">
-                        <span class="switch-label">Ours</span>
-                        <label class="switch">
-                            <input type="checkbox" id="teaserVideoSwitch" onclick="selectTeaserVideo()">
-                            <div class="slider round"></div>
-                        </label>
-                        <span class="switch-label">Zip-NeRF</span>
-                    </div>
-                </div>
-                <script>
-                    function selectTeaserVideo() {
-                      var video_ours = document.getElementById("teaser-video-ours");
-                      var video_zipnerf = document.getElementById("teaser-video-zipenrf");
-                      var videoSwitch = document.getElementById("teaserVideoSwitch");
-                      if (videoSwitch.checked) {
-                        video_zipnerf.hidden = false;
-                        video_ours.hidden = true;
-                      } else {
-                        video_zipnerf.hidden = true;
-                        video_ours.hidden = false;
-                      }
-                    }
-                </script>
- -->
-			<!-- </div>
-        </div> -->
-
-
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>
                     Abstract
                 </h3>
                 <p class="text-justify">
-                    Marigold is a novel method of monocular depth estimation, which can predict affine-invariant depth from a single RGB image. In this 3DV project, we analyzed the performance of Marigold in various datasets, and evaluated the effectiveness of Marigold depth in downsream tasks, e.g. 3D reconstruction, pose estimation.
-                    In terms of scene reconstruction, Neural Radiance Fields (NeRFs) recently showed superior performance in 3D reconstruction. However, NeRFs require a large number of input images to recover a high-quality 3D model. We evaluated the performance of Marigold in 3D reconstruction with sparse inputs. In terms of camera pose estimation, we implemented an effective optimization method based on FrozenRecon, to estimate the camera poses while aligning the outputs of Marigold to scale-consistent depths.
+                    DART is a diffusion-based autoregressive motion model for real-time text-driven motion control. It is capable of creating realistic sequences of motions conditioned on text.
+                    Naturally the model should be capable of adapting to different scene geometry, but also avoid self-intersection for humans. This is where the current optimization approach of latent codes lacks in qualitative results. With our contributions, 
+                    the optimization is improved by using SMPL-X and Volumetric SMPL, which gives better collision loss objectives, 
+                    leading to less intersections with the scene geometry and self-intersections.
                 </p>
             </div>
         </div>
@@ -183,130 +139,62 @@
                 <h3>
                     Method
                 </h3>
-                <h4>
-                    Marigold Depth Evaluation
-                </h4>
+                <!-- <h4>
+                    DART Motion Generation + VolumetricSMPL-based Collision Optimization
+                </h4> -->
 
-                <image src="img/overview_eval.png" width=60% style="display: block; margin: auto;"></image>
+                <image src="img/method_overview.png" width=60% style="display: block; margin: auto;"></image>
                 <br>
                 <p class="text-justify">
                     To evaluate Marigold performance, we run Marigold on various dataset with groundtruth depth, and align the affine-invariant depth from Marigold with the groundtruth by RANSAC. Then we compare the aligned depth and groundtruth depth qualitatively and quantitatively using absolute relative error.
                 </p >
                 <br>
-
-                <h4>
-                    3D Reconstruction with Marigold Depth
-                </h4>
-                <!-- <h3>
-				  <b> <font color="#118ab2"></font><font color="#ef486e">Fusion</font></b> = <font color="#118ab2">3D Reconstruction</font>  + <font color="#ef486e">Diffusion Prior</font>
-                </h3> -->
-                <image src="img/overview_recon.png" width=60% style="display: block; margin: auto;"></image>
-                <br>
-                <p class="text-justify">
-                    Marigold only predict affine-invariant depth, which could not be directly used for depth supervision. We need to align the scale and offset of Marigold depth with metric depth and use adjusted depth to supervise NeRF training. We jointly optimize the scale, offset and NeRF representation. We use nerfacto as our NeRF backbone due to its fast speed.
-                </p>
-                <br>
-
-                <h4>
-                    Camera Pose Estimation with Marigold
-                </h4>
-                <image src="img/overview_pose.png" width=60% style="display: block; margin: auto;"></image>
-                <br>
-                <p class="text-justify">
-                    We implement an optimization pipeline (primarily based on FrozenRecon) to estimate camera poses. We jointly optimize the scale (global scale) and offset (global offset) for each image, as well as camera poses, camera focal lengths, and point weights used for local alignment. A local alignment module is utilized to guide the optimization of parameters, and accelerate convergence. The loss function consists of color and depth warping losses, along with a regularization term to enforce the point weights close to 1.
-                </p>
             </div>
         </div><br>
-	<!-- <div class="row">
-		<div class="col-md-8 col-md-offset-2">
-		<h3> ReconFusion enables high-quality 3D reconstruction from few views</h3><br>
-                <video id="co3d-grid" width="100%" autoplay loop muted controls>
-                  <source src="videos/results/co3d_3x5.mp4" type="video/mp4" />
-                </video>
-                <br>
-                    <p class="text-justify" style="text-align: center;">ReconFusion generalizes to everyday scenes: the same diffusion model prior is used for <b>all</b> reconstruction results.</p>
-			</div>
-        </div> -->
 
-
-        <br>
         <div class="row">
             <div class="col-md-8 col-md-offset-2" id="area1">
                 <h3>
 				  Results
                 </h3>
                 <h4>
-                    3D Reconstruction with Marigold Depth
+                    Scene Navigation
                 </h4>
 
                 <div class="text-center ">
                     <ul class="nav nav-pills center-pills">
                         <li class="method-pill active" data-value="fortress"
-                            onclick="selectCompVideo(this, 'area1')"><a>Fortress</a></li>
+                            onclick="selectCompVideo(this, 'area1')"><a>CAB benches</a></li>
                         <li class="method-pill" data-value="leaves"
-                            onclick="selectCompVideo(this, 'area1')"><a>Leaves</a></li>
-                        <li class="method-pill" data-value="orchids"
-                            onclick="selectCompVideo(this, 'area1')"><a>Orchids</a></li>
-                        <li class="method-pill" data-value="room"
-                            onclick="selectCompVideo(this, 'area1')"><a>Room</a></li>
-                    </ul>
-                    <ul class="nav nav-pills center-pills">
-                        <li class="method-pill" data-value="fern"
-                        onclick="selectCompVideo(this, 'area1')"><a>Fern</a></li>
-                        <li class="method-pill" data-value="flower"
-                            onclick="selectCompVideo(this, 'area1')"><a>Flower</a></li>
-                        <li class="method-pill" data-value="horns"
-                            onclick="selectCompVideo(this, 'area1')"><a>Horns</a></li>
-                        <li class="method-pill" data-value="trex"
-                            onclick="selectCompVideo(this, 'area1')"><a>Trex</a></li>
-                    </ul>
+                            onclick="selectCompVideo(this, 'area1')"><a>Seminar-G110</a></li>
                 </div>
-
-                <!-- <script>
-                    activeMethodPill = document.querySelector('.method-pill.active-pill');
-                    activeScenePill = document.querySelector('.scene-pill.active-pill');
-                    activeModePill = document.querySelector('.mode-pill.active-pill');
-                </script> -->
 
                 <div class="text-center">
                     <div class="video-container">
                         <video class="video" style="height: 280px; max-width: 100%;" id="compVideoArea1" loop playsinline autoplay muted>
-                            <source id="sourceArea1" src="videos/h264_fortress.mp4" type="video/mp4" />
+                            <source id="sourceArea1" src="/Users/jiaxiangyi/Downloads/cab_benches_dart.mp4" type="video/mp4" />
                         </video>
                     </div>
                     <p class="text-justify" style="text-align: center;">
-                        Nerfacto (left) vs Ours (right) on LLFF dataset. Scene trained on <span id="compVideoValue">3</span> views. Try selecting scenes!
+                        Original DART (left) vs Ours (right) on two EgoBody scenes. Collisions are highlighted in RED. Try selecting scenes!
                     </p>
-                    <!-- <script>
-                        video0 = document.getElementById("compVideo0");
-                        video0.addEventListener('loadedmetadata', function() {
-                            if (activeVidID == 0 && select){
-                                video0.play();
-                                // print video size
-                                console.log(video0.videoWidth, video0.videoHeight);
-                                video0.hidden = false;
-                                video1.hidden = true;
-                            }
-                        });
-                    </script>
-
-                    <script>
-                        activeMethodPill = document.querySelector('.method-pill.active-pill'); -->
-                    <!-- </script> -->
                     <br>
                 </div>
-            </div>
+            <!-- </div> -->
 
-            <br>
+                <h4>
+                    Interaction with Static Objects
+                </h4>
+
             <!-- <div class="row"> -->
-            <div class="col-md-8 col-md-offset-2" id="area2">
+            <!-- <div class="col-md-8 col-md-offset-2" id="area2"> -->
 
                 <div class="text-center ">
                     <ul class="nav nav-pills center-pills">
                         <li class="method-pill active" data-value="record3d_sheep"
-                            onclick="selectCompVideo(this, 'area2')"><a>Sheep</a></li>
+                            onclick="selectCompVideo(this, 'area2')"><a>Kitchen</a></li>
                         <li class="method-pill" data-value="record3d_flower"
-                            onclick="selectCompVideo(this, 'area2')"><a>Flower</a></li>
+                            onclick="selectCompVideo(this, 'area2')"><a>Foodlab</a></li>
                     </ul>
                 </div>
 
@@ -323,7 +211,7 @@
                         </video>
                     </div>
                     <p class="text-justify" style="text-align: center; margin-bottom: 2em;">
-                        Nerfacto (left) vs Ours (right) on Record3D dataset. Scene trained on <span id="compVideoValue">9</span> views. Try selecting scenes!
+                        Original DART (left) vs Ours (right) on two EgoBody scenes. Collisions are highlighted in RED. Try selecting scenes!
                     </p>
                         <!-- <script>
                             video0 = document.getElementById("compVideo0");
@@ -342,229 +230,70 @@
                             activeMethodPill = document.querySelector('.method-pill.active-pill');
                         </script> -->
                 </div>
-            </div>
+            <!-- </div> -->
             <br>
 
+            <h4>
+                Human-human Interaction & Interaction with Dynamic Scene
+            </h4>
+
+            <!-- add other visualizations -->
+            <!-- <div class="col-md-8 col-md-offset-2" id="area3"> -->
+                <p class="text-justify">
+                    We also implemented human-human interaction and interaction with dynamic objects. For human-human interaction, we model a high-five motion for two persons by jointly optimizing both humans' motions.
+                    For interacting with dynamic objects, we model a person dribbling a bouncing ball.
+                </p>
+                <div class="text-center ">
+                    <ul class="nav nav-pills center-pills">
+                        <li class="method-pill active" data-value="record3d_sheep"
+                            onclick="selectCompVideo(this, 'area3')"><a>High-five</a></li>
+                        <li class="method-pill" data-value="record3d_flower"
+                            onclick="selectCompVideo(this, 'area3')"><a>Bouncing Ball</a></li>
+                    </ul>
+            </div>
+            <div class="text-center">
+                    <div class="video-container">
+                        <video class="video" style="height: 280px; max-width: 100%;" id="compVideoArea3" loop playsinline autoplay muted>
+                            <source id="sourceArea3" src="videos/h264_record3d_sheep.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+            </div>
+            <br>
+            </div>
+
+
             <div class="col-md-8 col-md-offset-2" id="area3">
+                <h3>
+				  Quantitative Results
+                </h3>
                 <h4>
-                    Camera Pose Estimation with Marigold
+                    Scene Navigation
                 </h4>
+                <p class="text-justify">
+                Our quantative evaluation includes the distance to the final goal (in meters), the collision percentage, the total number
+                of vertices colliding with the scene among all the evaluated
+                frames, the joint loss, the contact motion smoothness, which
+                is represented by the jerk loss.
+                </p>
 <!--                 <image src="img/pose_est_table.png" width=95% style="display: block; margin: auto;"></image> -->
                 <image src="img/frame10_result.png" width=100% style="display: block; margin: auto;"></image>
                 <p class="text-justify" style="text-align: center;">
-                    Colmap, FrozenRecon vs Our method on ScanNet dataset.
-                </p>
-                <p class="text-justify" style="text-align: center;font-size: 12px;">
-                    Sample the first 10 frames from original datasets at intervals of 5 frames for test, as it takes too much time for Marigold and optimization to run on the entire dataset.
+                    Original DART (baseline) vs Ours on the navigation task.
                 </p>
                 <br>
 
                 <h4>
-                    Limitation Analysis of Camera Pose Estimation
+                    Interaction with Static Objects
                 </h4>
-                <p class="text-justify" style="text-align: center;">
-                    Here we show some failure cases on KITTI (nearly straight-line motion with small differences between frames) and ScanNet with large sampling interval of 100 frames.
-               </p>
                 <image src="img/fail_cases.png" width=95% style="display: block; margin: auto;"></image>
                 <p class="text-justify" style="text-align: center;">
-                    Our method and FrozenRecon might fail when the camera motion is in a nearly straight line, differences between frames are small, or frame interval is too large.
+                    Original DART (baseline) vs Ours on the navigation task.
                 </p>
             </div>
             <br>
         </div>
         <br>
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    Marigold Depth Evaluation
-                </h3>
-                <h4>
-                    What Marigold is Good at
-                </h4>
-                <image src="img/good_at.png" width=60% style="display: block; margin: auto;"></image>
-                <p class="text-justify">
-                    Marigold is good at <b>estimating depth for objects with distinctive features</b>. Such as for The microphone in the red rectangle. Its depth even cannot be captured by sensor, but it can be estimated by Marigold. And Marigold can <b>prevent from being influenced by mirror</b>.
-                </p>
-                <br>
-
-                <h4>
-                    What Marigold is Not Good at: Edges, too Close and too Far Objects
-                </h4>
-                <image src="img/not_good_at.png" width=100% style="display: block; margin: auto;"></image>
-                <br>
-
-                <h4>
-                    Quantitative Evaluation
-                </h4>
-                <image src="img/evaluate_result.png" width=60% style="display: block; margin: auto;"></image>
-            </div>
-        </div>
-
-        <br>
-        <br>
-
-        <!-- <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-				  ReconFusion improves both few-view and many-view reconstruction
-                </h3><br>
-                <p class="text-justify" style="color:red">
-                    Hover over the plot to show rendered video under different number of views.
-                </p> -->
-
-                <!-- top down layout -->
-                <!-- <canvas id="sparsityChart" style="max-height: 300px; max-width: 500px; margin: auto;"></canvas>
-                <script src="js/sparsity_chart.js"></script>
-                <br>
-                <p class="text-center">
-                    Our diffusion prior improves performance over baseline Zip-NeRF in both the few-view and many-view sampling regimes.
-                </p>
-
-                <div class="text-center">
-                    <div class="video-compare-container" id="materialsDiv">
-                        <video class="video" id="sparsity" loop playsinline autoPlay muted src="videos/sparsity/stacked_vid.mp4" onplay="resizeAndPlay(this)"></video>
-                        <canvas height=0 class="videoMerge" id="sparsityMerge"></canvas>
-                    </div> -->
-                    <!-- <canvas height=0 class="videoWrapper" id="sparsityVideoWrapper"></canvas> -->
-			<!-- <em>Move the slider to adjust the number of views. The left column shows the nearest input view.</em>
-                    <div class="slider-container" style="padding-left: 12%; padding-right: 11%;">
-                        <input type="range" class="styled-slider" id="sparsitySlider" min="0" max="6" step="1" value="0" list="slider-labels">
-                        <datalist id="slider-labels">
-                            <option value="0">3</option>
-                            <option value="1">6</option>
-                            <option value="2">9</option>
-                            <option value="3">18</option>
-                            <option value="4">27</option>
-                            <option value="5">54</option>
-                            <option value="6">81</option>
-                        </datalist>
-                    </div>
-                    <table style="text-align: left; padding-left: 0px; padding-right: 10%; width: 100%;">
-                        <tr>
-                            <th width="10%"></th>
-                            <td width="10%">3</td>
-                            <td width="10%">6</td>
-                            <td width="10%">9</td>
-                            <td width="10%">18</td>
-                            <td width="10%">27</td>
-                            <td width="10%">54</td>
-                            <td width="10%">81</td>
-                        </tr>
-                    </table><br> -->
-                    <!-- <div class="text-center">
-                        Rendered video under <span id="sparsityValue" style="color: red;">3</span> views
-                    </div> -->
-                <!-- </div> -->
-
-                <!-- left right layout -->
-                <!-- <table style="width: 100%; border-collapse: collapse;">
-                    <tr>
-                      <td style="text-align: center;" >
-                        <canvas id="sparsityChart" style="max-height: 250px; max-width: 200px; margin: auto;"></canvas>
-                        <script src="js/sparsity_chart.js"></script>
-                      </td>
-                      <td style="text-align: center;">
-                        <video class="video" width=100% id="sparsityVideo" loop playsinline autoplay muted onplay="playOnCanvas(this, 180)">
-                            <source src="videos/sparsity/kitchenlego_3.mp4" type="video/mp4" />
-                        </video>
-                        <canvas height=0 class="videoWrapper" id="sparsityVideoWrapper"></canvas>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="text-align: center;"></td>
-                      <td style="text-align: center;">Rendered video under <span id="sparsityValue" style="color: red;">3</span> views</td>
-                    </tr>
-                </table> -->
-            <!-- </div>
-        </div> -->
-
-        <!-- <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center">
-                <h3>
-                    ReconFusion distills a consistent 3D model from inconsistent samples
-                </h3><br>
-
-                <table style="margin-left: auto; margin-right: auto; width: 90%;">
-                    <tr>
-                      <th style="width: 4%;"></th>
-                      <th style="text-align: center;width: 32%;">LLFF (3 views)</th>
-                      <th style="text-align: center;width: 32%;">CO3D (6 views)</th>
-					  <th style="text-align: center;width: 32%;">mip-NeRF 360 (9 views)</th>
-                    </tr>
-                    <tr>
-                      <td style="text-align: center; writing-mode: vertical-lr; transform: rotate(180deg); width:4%">3D Reconstruction</td>
-                      <td rowspan="2" colspan="3" style="width: 96%">
-                        <video class="video" width=100% loop playsinline autoplay muted controls>
-                            <source src="videos/ablation/recon_vs_samples.mp4" />
-                        </video>
-                      </td> -->
-                      <!-- <td style="text-align: center;">
-                        <video class="video" width=100% loop playsinline autoplay muted style="max-height: 150px;">
-                            <source src="videos/ablation/z123_nerf.mp4" />
-                        </video>
-                      </td>
-                      <td style="text-align: center;">
-                        <video class="video" width=100% loop playsinline autoplay muted style="max-height: 150px;">
-                            <source src="videos/ablation/scratch_nerf.mp4" />
-                        </video>
-                      </td>
-                      <td style="text-align: center;">
-                        <video class="video" width=100% loop playsinline autoplay muted style="max-height: 150px;">
-                            <source src="videos/ablation/ours_nerf.mp4" />
-                        </video>
-                      </td> -->
-                    <!-- </tr>
-                    <tr>
-					  <td style="text-align: center; writing-mode: vertical-lr; transform: rotate(180deg); width:4%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Samples&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td></td> -->
-                      <!-- <td style="text-align: center;">
-                        <video class="video" width=100% loop playsinline autoplay muted style="max-height: 150px;">
-                            <source src="videos/ablation/z123_samples.mp4" />
-                        </video>
-                      </td>
-                      <td style="text-align: center;">
-                        <video class="video" width=100% loop playsinline autoplay muted style="max-height: 150px;">
-                            <source src="videos/ablation/scratch_samples.mp4" />
-                        </video>
-                      </td>
-                      <td style="text-align: center;">
-                        <video class="video" width=100% loop playsinline autoplay muted style="max-height: 150px;">
-                            <source src="videos/ablation/ours_samples.mp4" />
-                        </video>
-                      </td> -->
-                    <!-- </tr>
-                </table>
-                <br> -->
-<!--
-                <p class="text-justify" style="width: 85%; margin: auto;"> -->
-                <!-- <p class="text-justify" style="width:85%; margin:auto">
-                    ReconFusion recovers consistent 3D reconstructions (top) from a diffusion model that produces image samples independently for each viewpoint (bottom). These samples are not multiview consistent, but can produce high-quality 3D reconstructions when used as a prior in optimization.
-                </p>
-            </div>
-        </div>
-        <br>
-        <br> -->
-
-        <!-- <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    Citation
-                </h3>
-                <div class="form-group col-md-10 col-md-offset-1">
-				  <p class="text-justify">
-                    <textarea id="bibtex" class="form-control" readonly>
-@article{wu2023reconfusion,
-    title={ReconFusion: 3D Reconstruction with Diffusion Priors},
-    author={Rundi Wu and Ben Mildenhall and Philipp Henzler and
-			Keunhong Park and Ruiqi Gao and Daniel Watson and
-			Pratul P. Srinivasan and Dor Verbin and Jonathan T. Barron
-			and Ben Poole and Aleksander Holynski},
-    journal={arXiv},
-    year={2023}
-	}</textarea></p>
-                </div>
-            </div>
-        </div> -->
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -572,7 +301,7 @@
                     Acknowledgements
                 </h3>
                 <p class="text-justify">
-                We would like to thank our supervisors Mihai Dusmanu and Zuria Bauer for their valuable guidance in this 3DV project.
+                We would like to thank our supervisor Kaifeng Zhao for his valuable guidance in this Digital Humans project.
                     <br><br>
                 The website template was borrowed from <a href="http://mgharbi.com/">Michaël Gharbi</a> and <a href="https://dorverbin.github.io/refnerf">Ref-NeRF</a>.
                 </p>
